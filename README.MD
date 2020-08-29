@@ -4,6 +4,7 @@
 
 ## ENGLISH
 Plugin for AIMP: http://aimpremote.blogspot.com/p/downloads.html
+
 Before launch its mandatory to install Node.JS, follow this link: https://nodejs.org/en/
 
 How to launch widget:
@@ -15,6 +16,7 @@ Recommended Resolution - 128px x 768px
 
 ## РУССКИЙ
 Плагин для AIMP: http://aimpremote.blogspot.com/p/downloads-ru.html
+
 Перед запуском виджета необходимо установить Node.JS по ссылке: https://nodejs.org/en/
 
 Запуск виджета:
