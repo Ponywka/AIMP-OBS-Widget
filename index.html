@@ -1,0 +1,141 @@
+<html>
+    <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <style>
+@font-face {
+    font-family: 'MiscFixed';
+    src: url('./public/miscfs.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'MiscFixed', monospace;
+    margin: 0px;
+}
+
+#spotifyrightnow{
+    position: relative;
+    background-color: rgba(0,0,0,.5);
+    border-radius: 16px;
+    overflow: hidden;
+    height: 128px;
+    width: 100%;
+    border: 1px solid black;
+    box-sizing: border-box;
+    transition: opacity 1s;
+}
+
+#spotifyrightnow #albumlabel{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 128px;
+    height: 128px;
+    border-radius: 16px;
+}
+
+#spotifyrightnow #songinfo{
+    position: absolute;
+    top: -1px;
+    left: 127px;
+    line-height: 48px;
+    font-size: 36px;
+    color: white;
+    padding: 16px 24px;
+    text-shadow: -1px -1px 0px black,
+    -1px 0px 0px black,
+    -1px 1px 0px black,
+    0px -1px 0px black,
+    0px 1px 0px black,
+    1px -1px 0px black,
+    1px 0px 0px black,
+    1px 1px 0px black,
+    0px 0px 16px black;
+    overflow: hidden;
+    width: calc(100% - 128px);
+    box-sizing: border-box;
+}
+
+#spotifyrightnow #songinfo > div {
+    width: max-content;
+    will-change: transform;
+    transition: 3s;
+}
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function(){
+                let songnameanim, artistnameanim
+                //Animation
+                const animateText = (obj, maxwidth) => {
+                    //Stop animation
+                    obj.css("transition", "unset")
+                    obj.css("transform", "")
+                    //If name width more than block width
+                    if(maxwidth < obj.width()){
+                        //Restore animation
+                        obj.css("transition", "")
+                        let position = false
+                        let animate = setInterval(() => {
+                            console.log("tik");
+                            if(!position){
+                                obj.css("transform", "translateX(-"+(obj.width() - maxwidth)+"px)")
+                            }else{
+                                obj.css("transform", "translateX(0px)")
+                            }
+                            position = !position
+                        }, 6000);
+                        return animate
+                    }else{
+                        return null
+                    }
+                }
+                const animateTextStop = (animate) => {
+                    clearInterval(animate)
+                }
+
+                    let worker = setInterval(() => {
+                        $.ajax({
+                            url: "/getSong",
+                        })
+                        .done((data)=>{
+                            if(data.is_playing){
+                                $("#spotifyrightnow").css("opacity", 1)
+                                //Get previous names
+                                let pastname = $("#songname").html()
+                                let pastartistname = $("#artistname").html()
+
+                                //Set current names
+                                $("#albumlabel").attr("src", data.imageurl)
+                                $("#songname").html(data.titlename)
+                                $("#artistname").html(data.artistname)
+
+
+                                if($("#songname").html() != pastname){
+                                    if(typeof(songnameanim) != "undefined") clearInterval(songnameanim)
+                                    songnameanim = animateText($("#songname"), $("#songinfo").width())
+                                }
+
+                                if($("#artistname").html() != pastartistname){
+                                    if(typeof(artistnameanim) != "undefined") clearInterval(artistnameanim)
+                                    artistnameanim = animateText($("#artistname"), $("#songinfo").width())
+                                }
+                            }else{
+                                $("#spotifyrightnow").css("opacity", 0)
+                            }
+                        })
+                    }, 500)
+            })
+        </script>
+    </head>
+    <body>
+        <div id="spotifyrightnow">
+            <img id="albumlabel">
+            <div id="songinfo">
+                <div id="songname"></div>
+                <div id="artistname"></div>
+            </div>
+        </div>
+    </body>
+</html>
