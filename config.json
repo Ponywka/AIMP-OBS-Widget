@@ -1,8 +1,0 @@
-{
-    "copyright": "AIMP OBS Widget by: Ponywka",
-    "port": 4001,
-    "aimpData": {
-        "address": "localhost",
-        "port": 3333
-    }
-}

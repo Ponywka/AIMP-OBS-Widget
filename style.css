@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+	margin: 0px;
+}
+
+.row {
+	display: flex;
+}
+
+.widget {
+	margin: 32px;
+	display: block;
+	border: 1px solid black;
+	background-color: #191919;
+	box-shadow: 0px 8px 32px rgba(0, 0, 0, .5);
+	font-family: Roboto;
+	color: #c2c2c2;
+	height: 96px;
+	overflow: hidden;
+	transition: .3s opacity;
+}
+
+.widget.widget-hide {
+	opacity: 0;
+}
+
+.widget .songcover {
+	width: 96px;
+	height: 96px;
+	object-fit: cover;
+}
+
+.widget .songinfo {
+	padding: 9px 12px;
+}
+
+.widget .songtitle {
+	font-size: 1.5em;
+}
+
+.widget .songinfo>div {
+	line-height: 1.4em;
+	white-space: nowrap;
+}
