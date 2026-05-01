@@ -8,10 +8,6 @@ const elements = {
 
 const config = {
     updateTimeout: 500,
-    aimpData: {
-        address: 'localhost',
-        port: 3333
-    },
     placeholderData: {
         title: "Loading",
         artist: "AIMP Widget by Ponywka",
