@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;700&display=swap');
 
 body {
 	margin: 0px;
@@ -6,40 +6,72 @@ body {
 
 .row {
 	display: flex;
+	align-items: center;
+	height: 100%;
+	position: relative;
+	z-index: 1;
 }
 
 .widget {
 	margin: 32px;
 	display: block;
-	border: 1px solid black;
-	background-color: #191919;
+	border-radius: 48px;
+	background-color: #1b1b1b;
 	box-shadow: 0px 8px 32px rgba(0, 0, 0, .5);
-	font-family: Roboto;
-	color: #c2c2c2;
-	height: 96px;
+	font-family: 'Geologica', sans-serif;
+	color: #ffffff;
+	height: 240px;
 	overflow: hidden;
 	transition: .3s opacity;
+	position: relative;
 }
 
 .widget.widget-hide {
 	opacity: 0;
 }
 
+.widget .progress-fill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 0%;
+	background-color: #3d3d3d;
+	z-index: 0;
+	transition: width .3s linear;
+}
+
 .widget .songcover {
-	width: 96px;
-	height: 96px;
+	width: 192px;
+	height: 192px;
 	object-fit: cover;
+	border-radius: 24px;
+	margin: 24px;
+	display: block;
 }
 
 .widget .songinfo {
-	padding: 9px 12px;
+	padding: 0 24px 0 8px;
+	min-width: 0;
+    font-size: 1.75em;
 }
 
 .widget .songtitle {
-	font-size: 1.5em;
+	font-size: 1.75em;
+	font-weight: 700;
+	line-height: 1.2em;
+}
+
+.widget .songartist,
+.widget .songtime {
+	font-size: 1.15em;
+	font-weight: 400;
+	line-height: 1.3em;
+	color: #e0e0e0;
 }
 
 .widget .songinfo>div {
-	line-height: 1.4em;
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

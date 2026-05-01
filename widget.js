@@ -3,7 +3,8 @@ const elements = {
     cover: document.querySelector(".songcover"),
     title: document.querySelector(".songtitle"),
     artist: document.querySelector(".songartist"),
-    time: document.querySelector(".songtime")
+    time: document.querySelector(".songtime"),
+    progress: document.querySelector(".progress-fill")
 };
 
 const config = {
@@ -20,6 +21,10 @@ function updateWidget(data) {
     if (data.artist) elements.artist.innerText = data.artist;
     if (data.cover) elements.cover.src = data.cover;
     if (data.time) elements.time.innerText = data.time;
+    if (typeof data.progress == 'number') {
+        let pct = Math.max(0, Math.min(1, data.progress));
+        elements.progress.style.width = `${pct * 100}%`;
+    }
     if (typeof data.is_playing == 'boolean') {
         if (data.is_playing) {
             elements.widget.classList.remove('widget-hide');
@@ -30,7 +35,8 @@ function updateWidget(data) {
 }
 
 updateWidget(Object.assign(config.placeholderData, {
-    is_playing: false
+    is_playing: false,
+    progress: 0
 }));
 
 function secondsToTime(sec) {
@@ -103,9 +109,14 @@ let worker = setInterval(async function() {
             break work;
         }
 
-        // Update time + Hide/Show widget when music paused/playing
+        let pos = playerControlPanelState.result.track_position;
+        let len = playerControlPanelState.result.track_length;
+        let progress = (len > 0) ? (pos / len) : 0;
+
+        // Update time + progress + Hide/Show widget when music paused/playing
         updateWidget({
-            time: `${secondsToTime(playerControlPanelState.result.track_position)} / ${secondsToTime(playerControlPanelState.result.track_length)}`,
+            time: `${secondsToTime(pos)} / ${secondsToTime(len)}`,
+            progress: progress,
             is_playing: playerControlPanelState.result.playback_state == 'playing'
         });
 
