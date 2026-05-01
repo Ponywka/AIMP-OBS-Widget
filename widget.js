@@ -56,7 +56,7 @@ function netRequest(params) {
         headers['Content-Type'] = 'application/json';
 
         let xhr = new XMLHttpRequest();
-        xhr.open(params.method || 'GET', `http://${params.hostname || 'localhost'}:${params.port || 3333}${params.path || '/'}`);
+        xhr.open(params.method || 'GET', `${params.path || '/'}`);
         for (let headername of Object.keys(headers)) xhr.setRequestHeader(headername, headers[headername]);
         xhr.send(postData);
 
@@ -71,8 +71,6 @@ function netRequest(params) {
 
 function aimpRequest(method, params = {}) {
     return netRequest({
-        hostname: config.aimpData.address,
-        port: config.aimpData.port,
         path: '/RPC_JSON',
         method: 'POST',
         data: {
@@ -135,7 +133,7 @@ let worker = setInterval(async function() {
             "track_id": musicPlayingNow.id
         }));
         if (!musicCover.error) {
-            musicPlayingNow.cover = `http://${config.aimpData.address}:${config.aimpData.port}/${musicCover.result.album_cover_uri}`
+            musicPlayingNow.cover = `/${musicCover.result.album_cover_uri}`
         } else {
             musicPlayingNow.cover = config.placeholderData.cover;
         }
